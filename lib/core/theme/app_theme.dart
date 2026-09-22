@@ -15,6 +15,10 @@ class AppTheme {
       seedColor: AppColors.primary,
     ),
 
+    checkboxTheme: CheckboxThemeData(
+      checkColor: WidgetStateProperty.all(Colors.white),
+    ),
+
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.background,
       elevation: 0,

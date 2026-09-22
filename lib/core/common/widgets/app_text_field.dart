@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
@@ -8,6 +10,10 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final Color color;
+  final Icon? suffixIcon;
+  final Color borderColor;
+  final double borderRadius;
+
 
   const AppTextField({
     super.key,
@@ -16,7 +22,11 @@ class AppTextField extends StatelessWidget {
     this.hint,
     this.validator,
     this.obscureText = false,
-    this.keyboardType,  this.color = Colors.white,
+    this.keyboardType,
+    this.color = Colors.white,
+    this.suffixIcon,
+    this.borderColor = Colors.blue,
+    required this.borderRadius,
   });
 
   @override
@@ -29,7 +39,38 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        fillColor: Colors.white
+        hintStyle: TextStyle(
+          color: Colors.grey
+        ),
+        fillColor: Colors.white,
+        suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: BorderSide(
+            color: borderColor,
+            width: 1.5
+          )
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: BorderSide(
+            color: borderColor,
+              width: 1.5
+          )
+        ),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: BorderSide(
+            color: borderColor,
+              width: 1.5
+          )
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+              width: 1.5
+          )
+        ),
       ),
     );
   }
