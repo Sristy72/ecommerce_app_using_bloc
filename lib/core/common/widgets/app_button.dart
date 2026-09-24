@@ -28,8 +28,9 @@ class AppButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
-          //shadowColor: Colors.transparent,
-
+          disabledBackgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
         ),
         child: isLoading
             ? const SizedBox(

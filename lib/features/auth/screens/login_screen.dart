@@ -1,5 +1,7 @@
 import 'package:ecommerce_app_using_bloc/core/common/widgets/app_button.dart';
 import 'package:ecommerce_app_using_bloc/core/common/widgets/app_text_field.dart';
+import 'package:ecommerce_app_using_bloc/features/auth/screens/sign_up_screen.dart';
+import 'package:ecommerce_app_using_bloc/features/auth/widgets/app_level.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,17 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Email', style: TextStyle(fontSize: 18)),
-            ),
+            AppLabel(text: 'Gmail'),
             SizedBox(height: 4),
 
             AppTextField(borderRadius: 28, hint: 'you@gmail.com'),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Password', style: TextStyle(fontSize: 18)),
-            ),
+            AppLabel(text: 'Password'),
 
             AppTextField(
               suffixIcon: Icon(
@@ -101,7 +97,11 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text("Don't have an account? "),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                      SignUpScreen()
+                    ));
+                  },
                   child: Text(
                     'Sign up',
                     style: TextStyle(
