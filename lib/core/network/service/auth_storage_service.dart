@@ -19,6 +19,20 @@ class AuthStorageService {
     );
   }
 
+  // Refresh Token
+  Future<void> saveRefreshToken(String token) async {
+    await secureStorage.write(
+      StorageConstants.refreshToken,
+      token,
+    );
+  }
+
+  Future<String?> getRefreshToken() async {
+    return secureStorage.read(
+      StorageConstants.refreshToken,
+    );
+  }
+
   Future<void> clearToken() async {
     await secureStorage.delete(
       StorageConstants.accessToken,
