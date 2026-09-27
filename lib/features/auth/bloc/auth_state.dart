@@ -1,5 +1,5 @@
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_event.dart';
-import 'package:ecommerce_app_using_bloc/features/auth/data/models/login_response_model.dart';
+import 'package:ecommerce_app_using_bloc/features/auth/data/models/response/login_response_model.dart';
 
 enum AuthStatus {
   initial,
