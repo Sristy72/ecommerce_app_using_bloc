@@ -4,7 +4,7 @@ class ApiConstants {
   static const String baseUrl = 'https://daniela-bake-backend.onrender.com/api/v1';
 
   static const String login = '$baseUrl/login';
-  static const String register = 'auth/register';
+  static const String register = '$baseUrl/register';
   static const String logout = 'auth/logout';
   static const String profile = 'profile';
 
