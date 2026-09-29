@@ -14,6 +14,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>(_logout);
     on<RememberMe>(_rememberMe);
     on<PasswordVisibilityCheck>(_passwordVisibilityCheck);
+    on<TermsAndCondition>(_termsAndCondition);
+  }
+
+  void _termsAndCondition(
+      TermsAndCondition event,
+      Emitter<AuthState> emit,
+      ) {
+    emit(
+      state.copyWith(
+        isTermsAndConditions: event.value,
+      ),
+    );
   }
 
   _passwordVisibilityCheck(

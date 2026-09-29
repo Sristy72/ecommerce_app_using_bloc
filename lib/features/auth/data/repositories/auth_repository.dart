@@ -25,10 +25,6 @@ class AuthRepository {
     return loginResponse;
   }
 
-  Future logout()async{
-    await authStorageService.clearToken();
-  }
-
   Future<RegisterResponseModel> signUp(RegisterRequestModel register)async{
     final response =  await apiClient.post(ApiConstants.register, data: register.toJson());
 
@@ -36,4 +32,9 @@ class AuthRepository {
 
     return registerResponse;
   }
+
+  Future logout()async{
+    await authStorageService.clearToken();
+  }
+
 }

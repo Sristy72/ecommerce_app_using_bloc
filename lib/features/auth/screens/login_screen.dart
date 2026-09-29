@@ -24,7 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.authenticated) {}
+        if (state.status == AuthStatus.authenticated) {
+
+        }
 
         if (state.status == AuthStatus.failure) {
           AppSnackbar.show(context, state.errorMsg ?? 'Login failed');
@@ -79,8 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Checkbox(
-                            value: false,
-                            onChanged: (value) {},
+                            value: state.isRememberMe,
+                            onChanged: (value) {
+                              context.read<AuthBloc>().add(
+                                RememberMe(value ?? false)
+                              );
+                            },
                             fillColor: WidgetStateProperty.all(Colors.white),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
