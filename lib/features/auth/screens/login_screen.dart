@@ -24,15 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-<<<<<<< HEAD
         if (state.status == AuthStatus.authenticated) {
 
         }
 
-=======
-        if (state.status == AuthStatus.authenticated) {}
-
->>>>>>> 64acd19b23684451f3f7d90c00f0263516f0cc60
         if (state.status == AuthStatus.failure) {
           AppSnackbar.show(context, state.errorMsg ?? 'Login failed');
         }
@@ -42,131 +37,128 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(18.0),
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/images/Bakhouse_logo.png',
-                      height: 100,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Text(
-                    'Login to your account',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(height: 20),
-                  AppLabel(text: 'Gmail'),
-                  SizedBox(height: 4),
-
-                  AppTextField(
-                    controller: _emailTEController,
-                    borderRadius: 28,
-                    hint: 'you@gmail.com',
-                  ),
-                  AppLabel(text: 'Password'),
-
-                  AppTextField(
-                    controller: _passwordTEController,
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      color: Colors.grey.shade500,
-                    ),
-                    hint: 'Enter a password',
-                    borderRadius: 28,
-                  ),
-
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(
-<<<<<<< HEAD
-                            value: state.isRememberMe,
-                            onChanged: (value) {
-                              context.read<AuthBloc>().add(
-                                RememberMe(value ?? false)
-                              );
-                            },
-=======
-                            value: false,
-                            onChanged: (value) {},
->>>>>>> 64acd19b23684451f3f7d90c00f0263516f0cc60
-                            fillColor: WidgetStateProperty.all(Colors.white),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const SizedBox(width: 4),
-                          const Text(
-                            'Remember me',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/images/Bakhouse_logo.png',
+                        height: 100,
                       ),
-
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: const Text(
-                          'Forgot your password',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  AppButton(
-                    onPressed: (){
-                      context.read<AuthBloc>().add(
-                        Login(
-                          email: _emailTEController.text.trim(),
-                          password: _passwordTEController.text.trim(),
-                        ),
-                      );
-                    },
-                    text: 'Login',
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF76AAEA), Color(0xFF6B8FEE)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
                     ),
-                    textColor: Colors.white,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Don't have an account? "),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SignUpScreen(),
+                    SizedBox(height: 30),
+                    Text(
+                      'Login to your account',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(height: 20),
+                    AppLabel(text: 'Gmail'),
+                    SizedBox(height: 4),
+                
+                    AppTextField(
+                      controller: _emailTEController,
+                      borderRadius: 28,
+                      hint: 'you@gmail.com',
+                    ),
+                    AppLabel(text: 'Password'),
+                
+                    AppTextField(
+                      controller: _passwordTEController,
+                      suffixIcon: Icon(
+                        Icons.visibility_off,
+                        color: Colors.grey.shade500,
+                      ),
+                      hint: 'Enter a password',
+                      borderRadius: 28,
+                    ),
+                
+                    SizedBox(height: 5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Checkbox(
+                              value: state.isRememberMe,
+                              onChanged: (value) {
+                                context.read<AuthBloc>().add(
+                                    RememberMe(value ?? false)
+                                );
+                              },
+                              fillColor: WidgetStateProperty.all(Colors.white),
+                              materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
                             ),
-                          );
-                        },
-                        child: Text(
-                          'Sign up',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
+                            const SizedBox(width: 4),
+                            const Text(
+                              'Remember me',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: const Text(
+                            'Forgot your password',
+                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    AppButton(
+                      onPressed: (){
+                        context.read<AuthBloc>().add(
+                          Login(
+                            email: _emailTEController.text.trim(),
+                            password: _passwordTEController.text.trim(),
+                          ),
+                        );
+                      },
+                      text: 'Login',
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF76AAEA), Color(0xFF6B8FEE)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
                       ),
-                    ],
-                  ),
-                ],
+                      textColor: Colors.white,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't have an account? "),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Sign up',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             },
           ),
