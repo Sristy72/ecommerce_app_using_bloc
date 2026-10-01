@@ -49,76 +49,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Column(
-                children: [
-                  Image.asset('assets/images/Bakhouse_logo.png', height: 100),
-                  SizedBox(height: 30),
-                  Text(
-                    'Sign up to your account',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(height: 20),
-                  AppLabel(text: 'Name'),
-                  SizedBox(height: 4),
-                  AppTextField(borderRadius: 28, hint: 'Enter your name', controller: _nameTEController,),
-                  SizedBox(height: 6),
-                  AppLabel(text: 'Gmail'),
-                  SizedBox(height: 4),
-                  AppTextField(borderRadius: 28, hint: "you@gmail.com", controller:
-                    _emailTEController,),
-                  SizedBox(height: 6),
-                  AppLabel(text: 'Password'),
-                  SizedBox(height: 4),
-                  AppTextField(borderRadius: 28, hint: "Enter a password", controller: _passwordTEController,),
-                  SizedBox(height: 4),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(
-                        value: state.isTermsAndConditions,
-                        onChanged: (va) {
-                          context.read<AuthBloc>().add(
-                              TermsAndCondition(va ?? false)
-                          );
-                        },
-                        fillColor: WidgetStateProperty.all(Colors.white),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        visualDensity: VisualDensity.compact,
-                        checkColor: Colors.black,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        'I agree to the Terms of Service.',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  AppButton(
-                    text: 'Sign up',
-                    onPressed: () =>
-                        context.read<AuthBloc>().add(
-                          Signup(
-                            name: _nameTEController.text.trim(),
-                            email: _emailTEController.text.trim(),
-                            password: _passwordTEController.text,
-                            termsCondition: state.isTermsAndConditions,
-                          ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 40,),
+                    Image.asset('assets/images/Bakhouse_logo.png', height: 100),
+                    SizedBox(height: 30),
+                    Text(
+                      'Sign up to your account',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(height: 20),
+                    AppLabel(text: 'Name'),
+                    SizedBox(height: 4),
+                    AppTextField(borderRadius: 28, hint: 'Enter your name', controller: _nameTEController,),
+                    SizedBox(height: 6),
+                    AppLabel(text: 'Gmail'),
+                    SizedBox(height: 4),
+                    AppTextField(borderRadius: 28, hint: "you@gmail.com", controller:
+                      _emailTEController,),
+                    SizedBox(height: 6),
+                    AppLabel(text: 'Password'),
+                    SizedBox(height: 4),
+                    AppTextField(borderRadius: 28, hint: "Enter a password", controller: _passwordTEController,),
+                    SizedBox(height: 4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Checkbox(
+                          value: state.isTermsAndConditions,
+                          onChanged: (va) {
+                            context.read<AuthBloc>().add(
+                                TermsAndCondition(va ?? false)
+                            );
+                          },
+                          fillColor: WidgetStateProperty.all(Colors.white),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          visualDensity: VisualDensity.compact,
+                          checkColor: Colors.black,
                         ),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Text('Already have an account?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('Login'),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 4),
+                        const Text(
+                          'I agree to the Terms of Service.',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    AppButton(
+                      text: 'Sign up',
+                      onPressed: () =>
+                          context.read<AuthBloc>().add(
+                            Signup(
+                              name: _nameTEController.text.trim(),
+                              email: _emailTEController.text.trim(),
+                              password: _passwordTEController.text,
+                              termsCondition: state.isTermsAndConditions,
+                            ),
+                          ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text('Already have an account?'),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Login'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

@@ -16,7 +16,7 @@ class AuthRepository {
     final response = await apiClient.post(ApiConstants.login, data: request.toJson());
 
     final loginResponse = LoginResponseModel.fromJson(
-      response.data
+        response.data
     );
 
     authStorageService.saveAccessToken(loginResponse.accessToken);
@@ -37,14 +37,4 @@ class AuthRepository {
     await authStorageService.clearToken();
   }
 
-<<<<<<< HEAD
-=======
-  Future<RegisterResponseModel> signUp(RegisterRequestModel register)async{
-    final response =  await apiClient.post(ApiConstants.register, data: register.toJson());
-
-    final registerResponse = RegisterResponseModel.fromJson(response.data);
-
-    return registerResponse;
-  }
->>>>>>> 64acd19b23684451f3f7d90c00f0263516f0cc60
 }

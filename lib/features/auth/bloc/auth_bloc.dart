@@ -14,7 +14,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>(_logout);
     on<RememberMe>(_rememberMe);
     on<PasswordVisibilityCheck>(_passwordVisibilityCheck);
-<<<<<<< HEAD
     on<TermsAndCondition>(_termsAndCondition);
   }
 
@@ -30,9 +29,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _passwordVisibilityCheck(
-    PasswordVisibilityCheck event,
-    Emitter<AuthState> emit,
-  ) {
+      PasswordVisibilityCheck event,
+      Emitter<AuthState> emit,
+      ) {
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
 
@@ -43,24 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _login(Login event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: AuthStatus.loading));
 
-=======
-  }
-
-  _passwordVisibilityCheck(
-    PasswordVisibilityCheck event,
-    Emitter<AuthState> emit,
-  ) {
-    emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
-  }
-
-  _rememberMe(RememberMe event, Emitter<AuthState> emit) {
-    emit(state.copyWith(isRememberMe: event.value));
-  }
-
-  Future<void> _login(Login event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(status: AuthStatus.loading));
-
->>>>>>> 64acd19b23684451f3f7d90c00f0263516f0cc60
     try {
       final request = LoginRequestModel(
         email: event.email,
@@ -105,19 +86,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _logout(Logout event, Emitter<AuthState> emit)async{
     emit(
-      state.copyWith(
-        status: AuthStatus.loading
-      )
+        state.copyWith(
+            status: AuthStatus.loading
+        )
     );
     try{
       authRepository.logout();
       emit(state.copyWith(
-        status: AuthStatus.unauthenticated
+          status: AuthStatus.unauthenticated
       ));
     }catch(e){
       emit(state.copyWith(
-        status: AuthStatus.failure,
-        errorMsg: e.toString()
+          status: AuthStatus.failure,
+          errorMsg: e.toString()
       ));
     }
   }
