@@ -34,9 +34,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authenticated) {
+          AppSnackbar.show(context, 'Signup successful! Please login.');
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
           );
         }
 
@@ -98,15 +99,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(height: 20),
                     AppButton(
                       text: 'Sign up',
-                      onPressed: () =>
-                          context.read<AuthBloc>().add(
-                            Signup(
-                              name: _nameTEController.text.trim(),
-                              email: _emailTEController.text.trim(),
-                              password: _passwordTEController.text,
-                              termsCondition: state.isTermsAndConditions,
-                            ),
+                      isLoading: state.status == AuthStatus.loading,
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF76AAEA), Color(0xFF6B8FEE)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      textColor: Colors.white,
+                      onPressed: () {
+                        final name = _nameTEController.text.trim();
+                        final email = _emailTEController.text.trim();
+                        final password = _passwordTEController.text;
+
+                        if (name.isEmpty) {
+                          AppSnackbar.show(context, 'Please enter your name');
+                          return;
+                        }
+                        if (email.isEmpty) {
+                          AppSnackbar.show(context, 'Please enter your email');
+                          return;
+                        }
+                        if (password.isEmpty) {
+                          AppSnackbar.show(context, 'Please enter a password');
+                          return;
+                        }
+                        if (!state.isTermsAndConditions) {
+                          AppSnackbar.show(
+                            context,
+                            'Please accept the terms and conditions',
+                          );
+                          return;
+                        }
+
+                        context.read<AuthBloc>().add(
+                          Signup(
+                            name: name,
+                            email: email,
+                            password: password,
+                            termsCondition: state.isTermsAndConditions,
                           ),
+                        );
+                      },
                     ),
                     SizedBox(height: 20),
                     Row(

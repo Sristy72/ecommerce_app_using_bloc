@@ -4,6 +4,7 @@ import 'package:ecommerce_app_using_bloc/core/common/widgets/app_text_field.dart
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_bloc.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_event.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_state.dart';
+import 'package:ecommerce_app_using_bloc/features/auth/screens/forgot_password_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/screens/sign_up_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/widgets/app_level.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                 
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                          },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: Size.zero,

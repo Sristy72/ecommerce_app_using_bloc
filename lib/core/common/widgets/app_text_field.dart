@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
@@ -11,6 +9,7 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Color color;
   final Icon? suffixIcon;
+  final Icon? prefixIcon;
   final Color borderColor;
   final double borderRadius;
 
@@ -26,7 +25,7 @@ class AppTextField extends StatelessWidget {
     this.color = Colors.white,
     this.suffixIcon,
     this.borderColor = Colors.blue,
-    required this.borderRadius,
+    required this.borderRadius, this.prefixIcon,
   });
 
   @override
@@ -44,6 +43,7 @@ class AppTextField extends StatelessWidget {
         ),
         fillColor: Colors.white,
         suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(

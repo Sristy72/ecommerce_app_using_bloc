@@ -1,7 +1,7 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String baseUrl = 'https://daniela-bake-backend.onrender.com/api/v1';
+  static const String baseUrl = 'https://api.danielabakehousebakery.com/api/v1/auth';
 
   static const String login = '$baseUrl/login';
   static const String register = '$baseUrl/register';

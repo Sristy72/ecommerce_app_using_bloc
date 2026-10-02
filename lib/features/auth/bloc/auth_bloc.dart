@@ -28,14 +28,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  _passwordVisibilityCheck(
+  void _passwordVisibilityCheck(
       PasswordVisibilityCheck event,
       Emitter<AuthState> emit,
       ) {
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
 
-  _rememberMe(RememberMe event, Emitter<AuthState> emit) {
+  void _rememberMe(RememberMe event, Emitter<AuthState> emit) {
     emit(state.copyWith(isRememberMe: event.value));
   }
 
@@ -53,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         state.copyWith(status: AuthStatus.authenticated, user: response.user),
       );
     } catch (e) {
-      state.copyWith(status: AuthStatus.failure, errorMsg: e.toString());
+      emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }
   }
 
@@ -75,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
-      final response = authRepository.signUp(register);
+      await authRepository.signUp(register);
       emit(state.copyWith(status: AuthStatus.authenticated));
     } catch (e) {
       emit(
@@ -84,21 +84,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _logout(Logout event, Emitter<AuthState> emit)async{
+  Future<void> _logout(Logout event, Emitter<AuthState> emit) async {
     emit(
-        state.copyWith(
-            status: AuthStatus.loading
-        )
+      state.copyWith(
+        status: AuthStatus.loading,
+      ),
     );
-    try{
-      authRepository.logout();
+    try {
+      await authRepository.logout();
       emit(state.copyWith(
-          status: AuthStatus.unauthenticated
+        status: AuthStatus.unauthenticated,
       ));
-    }catch(e){
+    } catch (e) {
       emit(state.copyWith(
-          status: AuthStatus.failure,
-          errorMsg: e.toString()
+        status: AuthStatus.failure,
+        errorMsg: e.toString(),
       ));
     }
   }

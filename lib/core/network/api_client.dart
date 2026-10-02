@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../constants/app_constant.dart';
 import 'api_exception.dart';
 import 'constants/api_constant.dart';
@@ -29,12 +30,19 @@ class ApiClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          debugPrint('🌐 [API Request] ${options.method} ${options.uri}');
+          debugPrint('📦 [Request Data] ${options.data}');
           handler.next(options);
         },
         onResponse: (response, handler) {
+          debugPrint('✅ [API Response] ${response.statusCode} ${response.requestOptions.uri}');
+          debugPrint('📦 [Response Data] ${response.data}');
           handler.next(response);
         },
         onError: (error, handler) {
+          debugPrint('❌ [API Error] ${error.response?.statusCode} ${error.requestOptions.uri}');
+          debugPrint('⚠️ [Error Message] ${error.message}');
+          debugPrint('📦 [Error Data] ${error.response?.data}');
           handler.next(error);
         },
       ),
@@ -103,8 +111,14 @@ class ApiClient {
     String message = 'Something went wrong';
 
     if (error.response != null) {
-      message = error.response?.data['message'] ??
-          'Server error';
+      final data = error.response?.data;
+      if (data is Map && data.containsKey('message')) {
+        message = data['message']?.toString() ?? 'Server error';
+      } else if (data is String && data.isNotEmpty) {
+        message = data;
+      } else {
+        message = 'Server error (${error.response?.statusCode})';
+      }
     } else if (error.type == DioExceptionType.connectionTimeout) {
       message = 'Connection timeout';
     } else if (error.type == DioExceptionType.receiveTimeout) {
