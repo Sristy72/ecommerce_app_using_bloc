@@ -28,11 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-<<<<<<< HEAD
   void _passwordVisibilityCheck(
-=======
-  _passwordVisibilityCheck(
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
       PasswordVisibilityCheck event,
       Emitter<AuthState> emit,
       ) {
@@ -90,34 +86,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _logout(Logout event, Emitter<AuthState> emit) async {
     emit(
-<<<<<<< HEAD
       state.copyWith(
         status: AuthStatus.loading,
       ),
-=======
-        state.copyWith(
-            status: AuthStatus.loading
-        )
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
     );
     try {
       await authRepository.logout();
       emit(state.copyWith(
-<<<<<<< HEAD
         status: AuthStatus.unauthenticated,
-=======
-          status: AuthStatus.unauthenticated
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
       ));
     } catch (e) {
       emit(state.copyWith(
-<<<<<<< HEAD
         status: AuthStatus.failure,
         errorMsg: e.toString(),
-=======
-          status: AuthStatus.failure,
-          errorMsg: e.toString()
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
       ));
     }
   }

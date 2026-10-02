@@ -57,14 +57,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 20),
                     AppLabel(text: 'Gmail'),
                     SizedBox(height: 4),
-                
+
                     AppTextField(
                       controller: _emailTEController,
                       borderRadius: 28,
                       hint: 'you@gmail.com',
                     ),
                     AppLabel(text: 'Password'),
-                
+
                     AppTextField(
                       controller: _passwordTEController,
                       suffixIcon: Icon(
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       hint: 'Enter a password',
                       borderRadius: 28,
                     ),
-                
+
                     SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,15 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                
+
                         TextButton(
-<<<<<<< HEAD
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
                           },
-=======
-                          onPressed: () {},
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: Size.zero,

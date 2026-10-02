@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AppLabel(text: 'Gmail'),
                     SizedBox(height: 4),
                     AppTextField(borderRadius: 28, hint: "you@gmail.com", controller:
-                      _emailTEController,),
+                    _emailTEController,),
                     SizedBox(height: 6),
                     AppLabel(text: 'Password'),
                     SizedBox(height: 4),
@@ -88,7 +88,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           visualDensity: VisualDensity.compact,
                           checkColor: Colors.black,
-<<<<<<< HEAD
                         ),
                         const SizedBox(width: 4),
                         const Text(
@@ -152,39 +151,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           child: Text('Login'),
                         ),
-=======
-                        ),
-                        const SizedBox(width: 4),
-                        const Text(
-                          'I agree to the Terms of Service.',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    AppButton(
-                      text: 'Sign up',
-                      onPressed: () =>
-                          context.read<AuthBloc>().add(
-                            Signup(
-                              name: _nameTEController.text.trim(),
-                              email: _emailTEController.text.trim(),
-                              password: _passwordTEController.text,
-                              termsCondition: state.isTermsAndConditions,
-                            ),
-                          ),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Text('Already have an account?'),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Login'),
-                        ),
->>>>>>> 98676da0646449c31b817101f07b222c4745ddf3
                       ],
                     ),
                   ],
