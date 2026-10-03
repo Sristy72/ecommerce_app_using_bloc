@@ -24,6 +24,11 @@ class Signup extends AuthEvent {
   });
 }
 
+class ForgotPass extends AuthEvent{
+  final String email;
+  ForgotPass({required this.email});
+}
+
 class Logout extends AuthEvent {}
 
 class PasswordVisibilityCheck extends AuthEvent {}

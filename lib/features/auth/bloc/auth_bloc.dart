@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_event.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_state.dart';
+import 'package:ecommerce_app_using_bloc/features/auth/data/models/request/forgot_pass_request_model.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/data/models/request/login_request_model.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/data/models/request/register_request_model.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/data/repositories/auth_repository.dart';
@@ -17,21 +18,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<TermsAndCondition>(_termsAndCondition);
   }
 
-  void _termsAndCondition(
-      TermsAndCondition event,
-      Emitter<AuthState> emit,
-      ) {
-    emit(
-      state.copyWith(
-        isTermsAndConditions: event.value,
-      ),
-    );
+  void _termsAndCondition(TermsAndCondition event, Emitter<AuthState> emit) {
+    emit(state.copyWith(isTermsAndConditions: event.value));
   }
 
   void _passwordVisibilityCheck(
-      PasswordVisibilityCheck event,
-      Emitter<AuthState> emit,
-      ) {
+    PasswordVisibilityCheck event,
+    Emitter<AuthState> emit,
+  ) {
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
 
@@ -52,6 +46,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(status: AuthStatus.authenticated, user: response.user),
       );
+    } catch (e) {
+      emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
+    }
+  }
+
+  Future<void> _forgotPass(ForgotPass event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    try {
+      final request = ForgotPasswordRequestModel(email: event.email);
+      final response = await authRepository.forgotPass(request);
+      emit(state.copyWith(status: AuthStatus.authenticated));
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }
@@ -78,28 +83,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authRepository.signUp(register);
       emit(state.copyWith(status: AuthStatus.authenticated));
     } catch (e) {
-      emit(
-        state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()),
-      );
+      emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }
   }
 
   Future<void> _logout(Logout event, Emitter<AuthState> emit) async {
-    emit(
-      state.copyWith(
-        status: AuthStatus.loading,
-      ),
-    );
+    emit(state.copyWith(status: AuthStatus.loading));
     try {
       await authRepository.logout();
-      emit(state.copyWith(
-        status: AuthStatus.unauthenticated,
-      ));
+      emit(state.copyWith(status: AuthStatus.unauthenticated));
     } catch (e) {
-      emit(state.copyWith(
-        status: AuthStatus.failure,
-        errorMsg: e.toString(),
-      ));
+      emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }
   }
 }
