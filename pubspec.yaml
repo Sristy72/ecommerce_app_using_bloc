@@ -23,6 +23,9 @@ dependencies:
   get_it: ^9.3.0
   bloc: ^9.2.1
   flutter_bloc: ^9.1.1
+  pin_code_fields: ^10.1.1
+  material_ui: ^1.2.0
+  equatable: ^3.0.0
 
 dev_dependencies:
   flutter_test:

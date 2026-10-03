@@ -148,10 +148,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 30),
                       AppButton(
                         onPressed: (){
+                          final email = _emailTEController.text.trim();
+                          final password = _passwordTEController.text;
+
+                          if (email.isEmpty) {
+                            AppSnackbar.show(context, 'Please enter your email');
+                            return;
+                          }
+                          if (password.isEmpty) {
+                            AppSnackbar.show(context, 'Please enter your password');
+                            return;
+                          }
                           context.read<AuthBloc>().add(
                             Login(
-                              email: _emailTEController.text.trim(),
-                              password: _passwordTEController.text.trim(),
+                              email: email,
+                              password: password,
                             ),
                           );
                         },

@@ -5,7 +5,8 @@ enum AuthStatus {
   loading,
   authenticated,
   unauthenticated,
-  failure
+  failure,
+  forgotPasswordSuccess,
 }
 
 class AuthState {
@@ -15,12 +16,19 @@ class AuthState {
   final bool isTermsAndConditions;
   final UserModel? user;
   final String? errorMsg;
+  final String? successMsg;
+  final String? otp;
 
-  AuthState({this.status = AuthStatus.initial,
+  AuthState({
+    this.status = AuthStatus.initial,
     this.isPasswordVisible = false,
     this.isRememberMe = false,
     this.isTermsAndConditions = false,
-    this.errorMsg,  this.user});
+    this.errorMsg,
+    this.successMsg,
+    this.user,
+    this.otp,
+  });
 
   AuthState copyWith({
     AuthStatus? status,
@@ -28,14 +36,19 @@ class AuthState {
     bool? isRememberMe,
     bool? isTermsAndConditions,
     UserModel? user,
-    String? errorMsg
+    String? errorMsg,
+    String? successMsg,
+    String? otp,
   }) {
     return AuthState(
-        status: status ?? this.status,
-        isRememberMe: isRememberMe ?? this.isRememberMe,
-        isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
-        isTermsAndConditions: isTermsAndConditions ?? this.isTermsAndConditions,
-        user: user ?? this.user,
-        errorMsg: errorMsg);
+      status: status ?? this.status,
+      isRememberMe: isRememberMe ?? this.isRememberMe,
+      isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
+      isTermsAndConditions: isTermsAndConditions ?? this.isTermsAndConditions,
+      user: user ?? this.user,
+      errorMsg: errorMsg,
+      successMsg: successMsg,
+      otp: otp ?? this.otp,
+    );
   }
 }

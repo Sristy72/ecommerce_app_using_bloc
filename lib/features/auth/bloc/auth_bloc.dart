@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RememberMe>(_rememberMe);
     on<PasswordVisibilityCheck>(_passwordVisibilityCheck);
     on<TermsAndCondition>(_termsAndCondition);
+    on<ForgotPass>(_forgotPass);
   }
 
   void _termsAndCondition(TermsAndCondition event, Emitter<AuthState> emit) {
@@ -56,7 +57,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final request = ForgotPasswordRequestModel(email: event.email);
       final response = await authRepository.forgotPass(request);
-      emit(state.copyWith(status: AuthStatus.authenticated));
+      emit(
+        state.copyWith(
+          status: AuthStatus.forgotPasswordSuccess,
+          otp: response.otp,
+          successMsg: 'OTP sent to your email',
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }

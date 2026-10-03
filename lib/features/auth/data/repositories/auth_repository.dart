@@ -35,10 +35,13 @@ class AuthRepository {
     return registerResponse;
   }
 
-  Future<ForgotPasswordResponseModel> forgotPass(ForgotPasswordRequestModel register)async{
-    final response =  await apiClient.post(ApiConstants.register, data: register.toJson());
+  Future<ForgotPasswordResponseModel> forgotPass(
+      ForgotPasswordRequestModel request) async {
+    final response =
+        await apiClient.post(ApiConstants.forgotPass, data: request.toJson());
 
-    final forgotPassResponse = ForgotPasswordResponseModel.fromJson(response.data);
+    final forgotPassResponse =
+        ForgotPasswordResponseModel.fromJson(response.data);
     return forgotPassResponse;
   }
 
