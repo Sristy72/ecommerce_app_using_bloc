@@ -10,10 +10,12 @@ class LoginResponseModel {
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
+    // API response is wrapped: { success, message, data: { accessToken, refreshToken, user } }
+    final data = json['data'] as Map<String, dynamic>? ?? json;
     return LoginResponseModel(
-      accessToken: json['accessToken'] ?? '',
-      refreshToken: json['refreshToken'] ?? '',
-      user: UserModel.fromJson(json['user'] ?? {}),
+      accessToken: data['accessToken'] ?? '',
+      refreshToken: data['refreshToken'] ?? '',
+      user: UserModel.fromJson(data['user'] ?? {}),
     );
   }
 }

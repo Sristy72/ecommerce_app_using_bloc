@@ -38,7 +38,6 @@ class AuthState {
     UserModel? user,
     String? errorMsg,
     String? successMsg,
-    String? otp,
   }) {
     return AuthState(
       status: status ?? this.status,
@@ -48,7 +47,6 @@ class AuthState {
       user: user ?? this.user,
       errorMsg: errorMsg,
       successMsg: successMsg,
-      otp: otp ?? this.otp,
     );
   }
 }

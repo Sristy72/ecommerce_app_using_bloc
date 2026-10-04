@@ -3,9 +3,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorageService {
   final FlutterSecureStorage storage;
 
+  static const _androidOptions = AndroidOptions(
+    resetOnError: true,
+  );
+
   SecureStorageService({
     FlutterSecureStorage? storage,
-  }) : storage = storage ?? const FlutterSecureStorage();
+  }) : storage = storage ?? const FlutterSecureStorage(aOptions: _androidOptions);
 
   Future<void> write(
       String key,

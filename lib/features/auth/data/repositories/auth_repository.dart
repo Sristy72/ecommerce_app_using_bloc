@@ -14,15 +14,13 @@ class AuthRepository {
 
   AuthRepository({required this.apiClient, required this.authStorageService});
 
-  Future<LoginResponseModel> login(LoginRequestModel request)async{
+  Future<LoginResponseModel> login(LoginRequestModel request) async {
     final response = await apiClient.post(ApiConstants.login, data: request.toJson());
 
-    final loginResponse = LoginResponseModel.fromJson(
-        response.data
-    );
+    final loginResponse = LoginResponseModel.fromJson(response.data);
 
-    authStorageService.saveAccessToken(loginResponse.accessToken);
-    authStorageService.saveRefreshToken(loginResponse.refreshToken);
+    await authStorageService.saveAccessToken(loginResponse.accessToken);
+    await authStorageService.saveRefreshToken(loginResponse.refreshToken);
 
     return loginResponse;
   }

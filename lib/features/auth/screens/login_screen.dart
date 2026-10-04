@@ -7,6 +7,8 @@ import 'package:ecommerce_app_using_bloc/features/auth/bloc/auth_state.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/screens/forgot_password_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/screens/sign_up_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/auth/widgets/app_level.dart';
+import 'package:ecommerce_app_using_bloc/features/home/screens/home_screen.dart';
+import 'package:ecommerce_app_using_bloc/navigation_menu/main_screen_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authenticated) {
-
+          AppSnackbar.show(context, 'Login Successful');
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> MainScreenView()));
         }
 
         if (state.status == AuthStatus.failure) {

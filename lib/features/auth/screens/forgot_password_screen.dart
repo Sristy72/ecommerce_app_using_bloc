@@ -31,7 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         if (state.status == AuthStatus.forgotPasswordSuccess) {
           AppSnackbar.show(
             context,
-            state.successMsg ?? 'OTP sent to your email',
+            'OTP sent to your email',
           );
           Navigator.push(
             context,

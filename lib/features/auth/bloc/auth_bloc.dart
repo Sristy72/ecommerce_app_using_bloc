@@ -60,7 +60,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(
           status: AuthStatus.forgotPasswordSuccess,
-          otp: response.otp,
           successMsg: 'OTP sent to your email',
         ),
       );
