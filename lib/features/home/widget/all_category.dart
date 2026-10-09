@@ -6,10 +6,10 @@ import '../home_bloc/home_event.dart';
 import '../home_bloc/home_state.dart';
 import '../screens/food_item_by_category_screen.dart';
 
-class CategorySection extends StatelessWidget {
+class AllCategory extends StatelessWidget {
   final HomeState state;
 
-  const CategorySection({super.key, required this.state});
+  const AllCategory({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +57,17 @@ class CategorySection extends StatelessWidget {
         );
       }
 
-      final itemCount = state.categories.length > 6 ? 6 : state.categories.length;
-
-      return SizedBox(
-        height: 160,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: itemCount,
+      return Padding(
+        padding: const EdgeInsets.all(12),
+        child: GridView.builder(
+          itemCount: state.categories.length,
+          gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,       // must remain 4
+            childAspectRatio: 0.7,  // makes cards bigger vertically
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
           itemBuilder: (context, index) {
             final category = state.categories[index];
 
@@ -78,36 +82,43 @@ class CategorySection extends StatelessWidget {
                 );
               },
               child: Container(
-                width: 120,
-                margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                   color: Color(category.bgColor),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.black12, width: 0.5),
+                  borderRadius: BorderRadius.circular(9),
+                  border: Border.all(
+                    color: const Color(0xFFE7D5BF),
+                    width: 1,
+                  ),
                 ),
+                clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 4, right: 4),
-                      child: Text(
-                        category.name,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 2,
+                            vertical: 5,
+                          ),
+                          child: Text(
+                            category.name,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+                    Expanded(
+                      flex: 4,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: _buildCategoryImage(category.image),
                       ),
-                      child: _buildCategoryImage(category.image),
                     ),
                   ],
                 ),

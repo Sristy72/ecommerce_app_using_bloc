@@ -14,11 +14,21 @@ class GetItemByCategoryIdResponseModel {
   });
 
   factory GetItemByCategoryIdResponseModel.fromJson(Map<String, dynamic> json) {
+    // Handle outer envelope { "success": true, "data": { "total": ..., "data": [...] } }
+    final Map<String, dynamic> payload =
+        (json["data"] is Map<String, dynamic>)
+            ? (json["data"] as Map<String, dynamic>)
+            : json;
+
+    final rawList = (payload["data"] ?? payload["items"]) as List? ?? [];
+
     return GetItemByCategoryIdResponseModel(
-      total: json["total"],
-      page: json["page"],
-      pages: json["pages"],
-      items: List<FoodItem>.from(json["items"].map((x) => FoodItem.fromJson(x))),
+      total: payload["total"] ?? 0,
+      page: payload["page"] ?? 1,
+      pages: payload["pages"] ?? 1,
+      items: rawList
+          .map((x) => FoodItem.fromJson(x as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -48,17 +58,21 @@ class FoodItem {
 
   factory FoodItem.fromJson(Map<String, dynamic> json) {
     return FoodItem(
-      id: json["_id"],
-      name: json["name"],
-      description: json["description"],
-      price: (json["price"] as num).toDouble(),
-      image: json["image"],
-      category: Category.fromJson(json["category"]),
-      ingredients: List<ItemIngredient>.from(
-        json["ingredients"].map((x) => ItemIngredient.fromJson(x)),
+      id: json["_id"] ?? '',
+      name: json["name"] ?? '',
+      description: json["description"] ?? '',
+      price: (json["price"] as num?)?.toDouble() ?? 0.0,
+      image: json["image"] ?? '',
+      category: Category.fromJson(
+        (json["category"] is Map<String, dynamic>)
+            ? (json["category"] as Map<String, dynamic>)
+            : {},
       ),
-      rating: (json["rating"] as num).toDouble(),
-      reviewsCount: json["reviewsCount"],
+      ingredients: (json["ingredients"] as List<dynamic>? ?? [])
+          .map((x) => ItemIngredient.fromJson(x as Map<String, dynamic>))
+          .toList(),
+      rating: (json["rating"] as num?)?.toDouble() ?? 0.0,
+      reviewsCount: (json["reviewsCount"] as num?)?.toInt() ?? 0,
     );
   }
 }
@@ -76,9 +90,9 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json["_id"],
-      name: json["name"],
-      image: json["image"],
+      id: json["_id"] ?? '',
+      name: json["name"] ?? '',
+      image: json["image"] ?? '',
     );
   }
 }

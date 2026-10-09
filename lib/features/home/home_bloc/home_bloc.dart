@@ -21,6 +21,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.homeRepository}) : super(const HomeState()) {
     on<FetchWeeklyMenuEvent>(_onFetchWeeklyMenu);
     on<FetchCategoryEvent>(_onFetchCategory);
+    on<FetchItemsByCategoryEvent>(_onFetchItemsByCategory);
+  }
+
+  Future<void> _onFetchItemsByCategory(
+    FetchItemsByCategoryEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(categoryItemsStatus: HomeStatus.loading));
+    try {
+      final response = await homeRepository.fetchSpecificItem(event.categoryId);
+      emit(state.copyWith(
+        categoryItemsStatus: HomeStatus.loaded,
+        categoryItems: response.items,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        categoryItemsStatus: HomeStatus.failure,
+        categoryItemsErrorMessage: e.toString(),
+      ));
+    }
   }
 
   Future<void> _onFetchCategory(
