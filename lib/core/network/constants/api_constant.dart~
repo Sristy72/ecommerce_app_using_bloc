@@ -13,7 +13,6 @@ class ApiConstants {
 
   // home
   static String popular(String day) => '$baseUrl/items?day=$day';
-  static String category = '$baseUrl/categories';
   static const String home = 'home';
   static const String orders = 'orders';
   static const String chat = 'chat';

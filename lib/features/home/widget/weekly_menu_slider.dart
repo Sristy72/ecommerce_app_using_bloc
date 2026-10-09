@@ -1,4 +1,4 @@
-import 'package:ecommerce_app_using_bloc/features/home/widget/weekly_menu_model.dart';
+import 'package:ecommerce_app_using_bloc/features/home/model/weekly_menu_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class WeeklyMenuSlider extends StatelessWidget {

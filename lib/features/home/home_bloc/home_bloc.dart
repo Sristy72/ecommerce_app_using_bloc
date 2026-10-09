@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app_using_bloc/features/home/data/repositories/home_repository.dart';
-import 'package:ecommerce_app_using_bloc/features/home/widget/weekly_menu_model.dart';
+import 'package:ecommerce_app_using_bloc/features/home/model/weekly_menu_model.dart';
 
 import 'home_event.dart';
 import 'home_state.dart';
@@ -20,6 +20,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc({required this.homeRepository}) : super(const HomeState()) {
     on<FetchWeeklyMenuEvent>(_onFetchWeeklyMenu);
+    on<FetchCategoryEvent>(_onFetchCategory);
+  }
+
+  Future<void> _onFetchCategory(
+    FetchCategoryEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(categoryStatus: HomeStatus.loading));
+    try {
+      final categoryResponse = await homeRepository.fetchCategory();
+      emit(state.copyWith(
+        categoryStatus: HomeStatus.loaded,
+        categories: categoryResponse.data,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        categoryStatus: HomeStatus.failure,
+        categoryErrorMessage: e.toString(),
+      ));
+    }
   }
 
   Future<void> _onFetchWeeklyMenu(
@@ -54,3 +74,4 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 }
+
