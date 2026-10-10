@@ -3,16 +3,40 @@ import 'package:flutter/material.dart';
 import '../home_bloc/home_state.dart';
 
 class ProductGrid extends StatelessWidget {
-  const ProductGrid({super.key, required this.state});
+  const ProductGrid({
+    super.key,
+    required this.state,
+    this.items,
+    this.shrinkWrap = false,
+    this.physics,
+  });
+
   final HomeState state;
+  final List<dynamic>? items;
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
 
   @override
   Widget build(BuildContext context) {
-    final items = state.categoryItems;
+    final displayItems = items ?? state.categoryItems;
+
+    if (displayItems.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Center(
+          child: Text(
+            'No items available',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ),
+      );
+    }
 
     return GridView.builder(
       padding: const EdgeInsets.all(12),
-      itemCount: items.length,
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      itemCount: displayItems.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
@@ -20,7 +44,7 @@ class ProductGrid extends StatelessWidget {
         childAspectRatio: 0.68,
       ),
       itemBuilder: (context, index) {
-        final product = items[index];
+        final product = displayItems[index];
 
         return Container(
           decoration: BoxDecoration(

@@ -57,13 +57,11 @@ class CategorySection extends StatelessWidget {
         );
       }
 
-      final itemCount = state.categories.length > 6 ? 6 : state.categories.length;
-
       return SizedBox(
         height: 160,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: itemCount,
+          itemCount: 6,
           itemBuilder: (context, index) {
             final category = state.categories[index];
 

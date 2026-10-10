@@ -16,6 +16,7 @@ class ApiConstants {
   static String category = '$baseUrl/categories';
   static String items(String categoryId, {int page = 1, int limit = 10}) =>
       '${ApiConstants.baseUrl}/items?category=$categoryId&page=$page&limit=$limit';
+  static String allPopular({int page = 1, int limit = 10}) => '${ApiConstants.baseUrl}/items?page=$page&limit=$limit';
   static const String home = 'home';
   static const String orders = 'orders';
   static const String chat = 'chat';

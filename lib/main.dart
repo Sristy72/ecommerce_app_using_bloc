@@ -29,8 +29,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => NavigationMenuBloc()),
         BlocProvider<HomeBloc>(
           create: (_) => getIt<HomeBloc>()
-            ..add(FetchWeeklyMenuEvent())
-            ..add(FetchCategoryEvent()),
+
         ),
       ],
       child: MaterialApp(
