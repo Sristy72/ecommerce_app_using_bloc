@@ -113,7 +113,7 @@ class ProductGrid extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '৳${product.price}',
+                            '\$${product.price}',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,

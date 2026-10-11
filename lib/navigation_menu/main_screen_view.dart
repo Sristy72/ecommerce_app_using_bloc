@@ -1,4 +1,5 @@
 import 'package:ecommerce_app_using_bloc/features/home/screens/home_screen.dart';
+import 'package:ecommerce_app_using_bloc/features/order/screens/order_screen.dart';
 import 'package:ecommerce_app_using_bloc/navigation_menu/navigation_bloc/navigation_menu_bloc.dart';
 import 'package:ecommerce_app_using_bloc/navigation_menu/navigation_bloc/navigation_menu_state.dart';
 import 'package:ecommerce_app_using_bloc/navigation_menu/navigation_menu.dart';
@@ -9,7 +10,8 @@ class MainScreenView extends StatelessWidget {
   const MainScreenView({super.key});
 
   final List<Widget> pages = const[
-    HomeScreen()
+    HomeScreen(),
+    OrderScreen()
   ];
 
   @override

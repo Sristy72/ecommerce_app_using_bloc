@@ -1,4 +1,5 @@
 import 'package:ecommerce_app_using_bloc/features/home/home_bloc/home_bloc.dart';
+import 'package:ecommerce_app_using_bloc/features/home/screens/all_available_items_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/home/screens/all_categories_screen.dart';
 import 'package:ecommerce_app_using_bloc/features/home/widget/category_section.dart';
 import 'package:ecommerce_app_using_bloc/features/home/widget/item_card.dart';
@@ -164,9 +165,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const Spacer(),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  const AllAvailableItemsScreen(),
+                            ),
+                          );
+                        },
                         child: const Text(
-                          'View all',
+                          'All available items',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

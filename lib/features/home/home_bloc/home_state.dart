@@ -22,6 +22,10 @@ class HomeState {
   final List<PopularItem> popularItems;
   final String popularItemErrorMessage;
 
+  final HomeStatus allItemsStatus;
+  final List<PopularItem> allItems;
+  final String allItemsErrorMessage;
+
   const HomeState({
     this.status = HomeStatus.initial,
     this.weeklyMenus = const [],
@@ -35,6 +39,9 @@ class HomeState {
     this.popularItemStatus = HomeStatus.initial,
     this.popularItems = const [],
     this.popularItemErrorMessage = '',
+    this.allItemsStatus = HomeStatus.initial,
+    this.allItems = const [],
+    this.allItemsErrorMessage = '',
   });
 
   HomeState copyWith({
@@ -50,6 +57,9 @@ class HomeState {
     HomeStatus? popularItemStatus,
     List<PopularItem>? popularItems,
     String? popularItemErrorMessage,
+    HomeStatus? allItemsStatus,
+    List<PopularItem>? allItems,
+    String? allItemsErrorMessage,
   }) {
     return HomeState(
       status: status ?? this.status,
@@ -66,6 +76,9 @@ class HomeState {
       popularItems: popularItems ?? this.popularItems,
       popularItemErrorMessage:
           popularItemErrorMessage ?? this.popularItemErrorMessage,
+      allItemsStatus: allItemsStatus ?? this.allItemsStatus,
+      allItems: allItems ?? this.allItems,
+      allItemsErrorMessage: allItemsErrorMessage ?? this.allItemsErrorMessage,
     );
   }
 }

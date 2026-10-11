@@ -22,6 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchWeeklyMenuEvent>(_onFetchWeeklyMenu);
     on<FetchCategoryEvent>(_onFetchCategory);
     on<FetchItemsByCategoryEvent>(_onFetchItemsByCategory);
+    on<FetchAllItemsEvent>(_onFetchAllItems);
   }
 
   Future<void> _onFetchItemsByCategory(
@@ -39,6 +40,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(
         categoryItemsStatus: HomeStatus.failure,
         categoryItemsErrorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _onFetchAllItems(
+    FetchAllItemsEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(allItemsStatus: HomeStatus.loading));
+    try {
+      final response = await homeRepository.getAllPopularItems();
+      emit(state.copyWith(
+        allItemsStatus: HomeStatus.loaded,
+        allItems: response.items,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        allItemsStatus: HomeStatus.failure,
+        allItemsErrorMessage: e.toString(),
       ));
     }
   }
@@ -72,7 +92,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       // Fetch items for all weekdays in parallel
       final results = await Future.wait(
-        entries.map((e) => homeRepository.getAllPopular(e.key)),
+        entries.map((e) => homeRepository.getPopular(e.key)),
       );
 
       final weeklyMenus = <WeeklyMenu>[];

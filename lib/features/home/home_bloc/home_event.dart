@@ -10,3 +10,5 @@ final class FetchItemsByCategoryEvent extends HomeEvent {
   FetchItemsByCategoryEvent(this.categoryId);
 }
 
+final class FetchAllItemsEvent extends HomeEvent {}
+
