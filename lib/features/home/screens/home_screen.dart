@@ -4,6 +4,8 @@ import 'package:ecommerce_app_using_bloc/features/home/screens/all_categories_sc
 import 'package:ecommerce_app_using_bloc/features/home/widget/category_section.dart';
 import 'package:ecommerce_app_using_bloc/features/home/widget/item_card.dart';
 import 'package:ecommerce_app_using_bloc/features/home/widget/weekly_menu_list.dart';
+import 'package:ecommerce_app_using_bloc/navigation_menu/navigation_bloc/navigation_menu_bloc.dart';
+import 'package:ecommerce_app_using_bloc/navigation_menu/navigation_bloc/navigation_menu_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (homeBloc.state.categoryStatus == HomeStatus.initial) {
       homeBloc.add(FetchCategoryEvent());
     }
+
+    homeBloc.add(FetchCartEvent());
   }
 
   @override
@@ -60,19 +64,62 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 15),
-              Container(
-                height: 45,
-                width: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: const Color(0xFF0B6DFF)),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Center(
-                    child: Icon(Icons.shopping_cart, color: Color(0xFF0B6DFF)),
-                  ),
-                ),
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: () {
+                      context.read<NavigationMenuBloc>().add(
+                            NavigationItemSelected(1),
+                          );
+                    },
+                    borderRadius: BorderRadius.circular(100),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: const Color(0xFF0B6DFF)),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Center(
+                              child: Icon(Icons.shopping_cart, color: Color(0xFF0B6DFF)),
+                            ),
+                          ),
+                        ),
+                        if (state.totalCartItems > 0)
+                          Positioned(
+                            right: -2,
+                            top: -2,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF087BFF),
+                                shape: BoxShape.circle,
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 20,
+                                minHeight: 20,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${state.totalCartItems}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
               ),
               const SizedBox(width: 18),
             ],

@@ -14,12 +14,14 @@ class ApiConstants {
   // home
   static String popular(String day) => '$baseUrl/items?day=$day';
   static String category = '$baseUrl/categories';
-  static String items(String categoryId, {int page = 1, int limit = 10}) =>
+  static String items(String categoryId, {int page = 1, int limit = 20}) =>
       '${ApiConstants.baseUrl}/items?category=$categoryId&page=$page&limit=$limit';
-  static String allPopular({int page = 1, int limit = 10}) => '$baseUrl/items?page=$page&limit=$limit';
+  static String allPopular({int page = 1, int limit = 20}) =>
+      '$baseUrl/items?page=$page&limit=$limit';
   static String addCart = '${ApiConstants.baseUrl}/cart/add';
   static String removeCart = '${ApiConstants.baseUrl}/cart/remove';
   static String removeOneCart = '${ApiConstants.baseUrl}/cart/reduce';
+  static String getCart(String userId) => '${ApiConstants.baseUrl}/cart/$userId';
 
 
 

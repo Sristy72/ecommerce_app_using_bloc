@@ -10,5 +10,22 @@ final class FetchItemsByCategoryEvent extends HomeEvent {
   FetchItemsByCategoryEvent(this.categoryId);
 }
 
+final class LoadMoreCategoryItemsEvent extends HomeEvent {}
+
 final class FetchAllItemsEvent extends HomeEvent {}
 
+final class LoadMoreAllItemsEvent extends HomeEvent {}
+
+final class AddToCartEvent extends HomeEvent {
+  final String itemId;
+
+  AddToCartEvent({required this.itemId});
+}
+
+final class RemoveFromCartEvent extends HomeEvent {
+  final String itemId;
+
+  RemoveFromCartEvent({required this.itemId});
+}
+
+final class FetchCartEvent extends HomeEvent {}

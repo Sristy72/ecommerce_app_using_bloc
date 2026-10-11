@@ -43,10 +43,17 @@ class CartItem {
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
+    String itemId = '';
+    if (json["item"] is Map) {
+      itemId = json["item"]["_id"]?.toString() ?? json["item"]["id"]?.toString() ?? '';
+    } else if (json["item"] != null) {
+      itemId = json["item"].toString();
+    }
+
     return CartItem(
-      item: json["item"],
-      quantity: json["quantity"],
-      id: json["_id"],
+      item: itemId,
+      quantity: (json["quantity"] as num?)?.toInt() ?? 0,
+      id: json["_id"]?.toString() ?? '',
     );
   }
 }

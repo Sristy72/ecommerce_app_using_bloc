@@ -45,5 +45,8 @@ Future<void> setupDependencies() async {
 
   // Blocs
   getIt.registerFactory<AuthBloc>(() => AuthBloc(authRepository: getIt<AuthRepository>()));
-  getIt.registerFactory<HomeBloc>(() => HomeBloc(homeRepository: getIt<HomeRepository>()));
+  getIt.registerFactory<HomeBloc>(() => HomeBloc(
+        homeRepository: getIt<HomeRepository>(),
+        authStorageService: getIt<AuthStorageService>(),
+      ));
 }

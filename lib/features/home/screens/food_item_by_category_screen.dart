@@ -20,14 +20,36 @@ class FoodItemByCategoryScreen extends StatefulWidget {
 }
 
 class _FoodItemByCategoryScreenState extends State<FoodItemByCategoryScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     context
         .read<HomeBloc>()
         .add(FetchItemsByCategoryEvent(widget.category.id));
   }
 
+  void _onScroll() {
+    if (_isBottom) {
+      context.read<HomeBloc>().add(LoadMoreCategoryItemsEvent());
+    }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll - 200);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +59,13 @@ class _FoodItemByCategoryScreenState extends State<FoodItemByCategoryScreen> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          if (state.categoryItemsStatus == HomeStatus.loading) {
+          if (state.categoryItemsStatus == HomeStatus.loading &&
+              state.categoryItems.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state.categoryItemsStatus == HomeStatus.failure) {
+          if (state.categoryItemsStatus == HomeStatus.failure &&
+              state.categoryItems.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +101,28 @@ class _FoodItemByCategoryScreenState extends State<FoodItemByCategoryScreen> {
             );
           }
 
-          return ProductGrid(state: state);
+          return Column(
+            children: [
+              Expanded(
+                child: ProductGrid(
+                  controller: _scrollController,
+                  state: state,
+                  items: state.categoryItems,
+                ),
+              ),
+              if (state.categoryItemsIsLoadingMore)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2.5),
+                    ),
+                  ),
+                ),
+            ],
+          );
         },
       ),
     );

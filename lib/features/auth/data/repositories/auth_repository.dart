@@ -21,6 +21,7 @@ class AuthRepository {
 
     await authStorageService.saveAccessToken(loginResponse.accessToken);
     await authStorageService.saveRefreshToken(loginResponse.refreshToken);
+    await authStorageService.saveUserId(loginResponse.user.id);
 
     return loginResponse;
   }

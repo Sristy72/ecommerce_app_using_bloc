@@ -14,13 +14,33 @@ class AllAvailableItemsScreen extends StatefulWidget {
 }
 
 class _AllAvailableItemsScreenState extends State<AllAvailableItemsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    final homeBloc = context.read<HomeBloc>();
-    if (homeBloc.state.allItemsStatus == HomeStatus.initial) {
-      homeBloc.add(FetchAllItemsEvent());
+    _scrollController.addListener(_onScroll);
+    context.read<HomeBloc>().add(FetchAllItemsEvent());
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      context.read<HomeBloc>().add(LoadMoreAllItemsEvent());
     }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll - 200);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,12 +56,14 @@ class _AllAvailableItemsScreenState extends State<AllAvailableItemsScreen> {
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           // ── Loading ──────────────────────────────────────────────
-          if (state.allItemsStatus == HomeStatus.loading) {
+          if (state.allItemsStatus == HomeStatus.loading &&
+              state.allItems.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
 
           // ── Error ────────────────────────────────────────────────
-          if (state.allItemsStatus == HomeStatus.failure) {
+          if (state.allItemsStatus == HomeStatus.failure &&
+              state.allItems.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,9 +91,27 @@ class _AllAvailableItemsScreenState extends State<AllAvailableItemsScreen> {
           }
 
           // ── Loaded ───────────────────────────────────────────────
-          return ProductGrid(
-            state: state,
-            items: state.allItems,
+          return Column(
+            children: [
+              Expanded(
+                child: ProductGrid(
+                  controller: _scrollController,
+                  state: state,
+                  items: state.allItems,
+                ),
+              ),
+              if (state.allItemsIsLoadingMore)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2.5),
+                    ),
+                  ),
+                ),
+            ],
           );
         },
       ),

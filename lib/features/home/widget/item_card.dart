@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../home_bloc/home_bloc.dart';
+import '../home_bloc/home_event.dart';
 import '../home_bloc/home_state.dart';
 
 class ProductGrid extends StatelessWidget {
@@ -9,16 +12,19 @@ class ProductGrid extends StatelessWidget {
     this.items,
     this.shrinkWrap = false,
     this.physics,
+    this.controller,
   });
 
   final HomeState state;
   final List<dynamic>? items;
   final bool shrinkWrap;
   final ScrollPhysics? physics;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
-    final displayItems = items ?? state.categoryItems;
+    final activeState = context.watch<HomeBloc>().state;
+    final displayItems = items ?? activeState.categoryItems;
 
     if (displayItems.isEmpty) {
       return const Padding(
@@ -33,6 +39,7 @@ class ProductGrid extends StatelessWidget {
     }
 
     return GridView.builder(
+      controller: controller,
       padding: const EdgeInsets.all(12),
       shrinkWrap: shrinkWrap,
       physics: physics,
@@ -45,6 +52,9 @@ class ProductGrid extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final product = displayItems[index];
+        final productId = product.id ?? '';
+        final cartQty = activeState.getCartQuantity(productId);
+        final isInCart = cartQty > 0;
 
         return Container(
           decoration: BoxDecoration(
@@ -120,22 +130,68 @@ class ProductGrid extends StatelessWidget {
                               color: Color(0xFF7F3615),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: 26,
-                              height: 26,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF087BFF),
-                                shape: BoxShape.circle,
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (isInCart) ...[
+                                InkWell(
+                                  onTap: () {
+                                    context.read<HomeBloc>().add(
+                                          RemoveFromCartEvent(
+                                            itemId: productId,
+                                          ),
+                                        );
+                                  },
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    width: 26,
+                                    height: 26,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF087BFF),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.remove,
+                                      size: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '$cartQty',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                              ],
+                              InkWell(
+                                onTap: () {
+                                  context.read<HomeBloc>().add(
+                                        AddToCartEvent(
+                                          itemId: productId,
+                                        ),
+                                      );
+                                },
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: 26,
+                                  height: 26,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF087BFF),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                              child: const Icon(
-                                Icons.add,
-                                size: 18,
-                                color: Colors.white,
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
