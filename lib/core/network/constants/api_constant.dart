@@ -22,6 +22,7 @@ class ApiConstants {
   static String removeCart = '${ApiConstants.baseUrl}/cart/remove';
   static String removeOneCart = '${ApiConstants.baseUrl}/cart/reduce';
   static String getCart(String userId) => '${ApiConstants.baseUrl}/cart/$userId';
+  static String fetchOrder = '${ApiConstants.baseUrl}/orders/my?filter=ongoing';
 
 
 
